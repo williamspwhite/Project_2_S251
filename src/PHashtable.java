@@ -12,7 +12,7 @@ public class PHashtable {
     //return the Patient with the given name 
     //or null if the Patient is not in the table
     public Patient get(String name) {
-        return NULL;
+        return null;
 	//TO BE COMPLETED
     }
 
@@ -26,7 +26,7 @@ public class PHashtable {
     //from the table
     //return null if Patient doesn't exist
     public Patient remove(String name) {
-        return NULL;
+        return null;
 	//TO BE COMPLETED
     }	    
 

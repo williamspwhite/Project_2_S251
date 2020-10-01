@@ -23,13 +23,13 @@ public class NewPatientQueue {
     //if there are multiple patients with the same urgency level,
     //return the one who arrived first
     public Patient delMax() {
-        return NULL;
+        return null;
 	//TO BE COMPLETED
     }
 
     //return but do not remove the first patient in the queue
     public Patient getMax() {
-        return NULL;
+        return null;
 	//TO BE COMPLETED
     }
 

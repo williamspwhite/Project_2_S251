@@ -33,14 +33,14 @@ public class Clinic {
     public String process(String name, int urgency) {
 	//TO BE COMPLETED
 	    processed++;
-	    return NULL;
+	    return null;
     }
 
     /*a doctor is available--send the patient with
      *highest urgency to be seen; return the name
      *of the Patient or null if the queue is empty*/
     public String seeNext() {
-        return NULL;
+        return null;
 	//TO BE COMPLETED
     }
 
