@@ -1,23 +1,28 @@
 import java.util.ArrayList;
 public class PHashtable {
     private ArrayList[] table;
-    
+    private int t_capacity;
+    private int size;
     //set the table size to the first 
     //prime number p >= capacity
     public PHashtable (int capacity) {
-
+        table = new ArrayList[getNextPrime(capacity)];
+        t_capacity = capacity;
+        size = 0;
 	//TO BE COMPLETED
     }
 
     //return the Patient with the given name 
     //or null if the Patient is not in the table
     public Patient get(String name) {
+        System.out.println(name.hashCode() % t_capacity);
         return null;
 	//TO BE COMPLETED
     }
 
     //put Patient p into the table
     public void put(Patient p) {
+        size++;
         return;
 	//TO BE COMPLETED
     }
@@ -26,13 +31,14 @@ public class PHashtable {
     //from the table
     //return null if Patient doesn't exist
     public Patient remove(String name) {
+        size--;
         return null;
 	//TO BE COMPLETED
     }	    
 
     //return the number of Patients in the table
     public int size() {
-        return 0;
+        return size;
 	//TO BE COMPLETED
     }
 

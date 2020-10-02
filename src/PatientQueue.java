@@ -16,6 +16,7 @@ public class PatientQueue {
     //return -1 if the patient could not be inserted
     public int insert(Patient p) {
         if (size() == array.length - 1) { //minus one because 0 isn't counted
+            System.out.println("INSERT FAILED");
             return -1;
         }
 
@@ -44,20 +45,19 @@ public class PatientQueue {
     //if there are multiple patients with the same urgency level,
     //return the one who arrived first
     public Patient delMax() {
-        //System.out.println(toString());
-        //System.out.println("DELETING");
+
         if (isEmpty()) {
             return null;
+        }
+        for (int i = 1; i < size() + 1; i++) {
+            swim(i);
         }
         Patient return_patient = array[1];
         array_swap(1, size());
         array[size()] = null;
+        sink(1);
         insert_index--;
 
-        for (int i = 1; i < size(); i++) {
-            sink(i);
-        }
-        //System.out.println(toString());
 
         return return_patient;
 	//TO BE COMPLETED
@@ -77,7 +77,6 @@ public class PatientQueue {
         if (isEmpty()) {
             return 0;
         }
-
         return insert_index - 1; // insert_index is one index above last index in array
     }
 
@@ -126,9 +125,10 @@ public class PatientQueue {
         }
         if (array[left_child_index].compareTo(array[parent_index]) > 0) {
             array_swap(left_child_index, parent_index);
-            if (array[right_child_index].compareTo(array[parent_index]) > 0) {
-                array_swap(right_child_index, parent_index);
-            }
+            return sink(parent_index);
+        } else if ((array[right_child_index] != null) && (array[right_child_index].compareTo(array[parent_index]) > 0)) {
+            array_swap(right_child_index, parent_index);
+            return sink(parent_index);
         }
 
 //        if (array[second_child_index] == null) { //if second child is null, then check if first needs to be swapped
