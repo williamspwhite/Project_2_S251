@@ -6,7 +6,7 @@ public class NewPatientQueue {
 
     //constructor: set variables
     //capacity = initial capacity of array 
-    public PatientQueue(int capacity) {
+    public NewPatientQueue(int capacity) { //should just be PatientQueue
 	//TO BE COMPLETED
             return;
     }
