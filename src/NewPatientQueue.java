@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class PatientQueue {
+public class NewPatientQueue {
     private Patient[] array;
     private PHashtable hashtable;
     private int insert_index;
@@ -12,7 +12,7 @@ public class PatientQueue {
 
     //constructor: set variables
     //capacity = initial capacity of array
-    public PatientQueue(int capacity) { //should just be PatientQueue
+    public NewPatientQueue(int capacity) { //should just be PatientQueue
         array = new Patient[capacity + 1];
 
         System.out.println(capacity);
@@ -34,6 +34,7 @@ public class PatientQueue {
 
         array[insert_index] = p; //inserts at next open index
         p.setPosInQueue(insert_index);
+        hashtable.put(p);
 
         insert_index++;
         size++;
@@ -70,9 +71,12 @@ public class PatientQueue {
         Patient return_patient = array[1];
         array_swap(return_patient, array[size()]);
         array[size()] = null;
+        return_patient.setPosInQueue(-1);
+
+        hashtable.remove(return_patient.name());
+
         insert_index--;
         size--;
-        return_patient.setPosInQueue(-1);
         sink(array[1]);
 
 
@@ -114,6 +118,47 @@ public class PatientQueue {
         return array;
     }
 
+    /*TO BE COMPLETED IN PART 2*/
+
+    //remove and return the Patient with
+    //name s from the queue
+    //return null if the Patient isn't in the queue
+    public Patient remove(String s) {
+        if (size() == 1) {
+            array[1].setPosInQueue(-1);
+            array[1] = null;
+            size--;
+            insert_index--;
+            return hashtable.remove(s);
+        }
+        Patient toReturn = hashtable.get(s);
+        Patient toSink = array[size()];
+        array_swap(toReturn, toSink);
+
+        System.out.println(toReturn.name());
+        System.out.println(array[size()].name());
+        array[size()] = null; //removed
+        hashtable.remove(s);
+
+        size--;
+        insert_index--;
+
+        sink(toSink);
+        toReturn.setPosInQueue(-1);
+
+        //TO BE COMPLETED
+        return toReturn;
+    }
+
+    //update the emergency level of the Patient
+    //with name s to urgency
+    public void update(String s, int urgency) {
+        hashtable.get(s).setUrgency(urgency);
+        sink(hashtable.get(s));
+        swim(hashtable.get(s));
+        return;
+        //TO BE COMPLETED
+    }
 
     public int swim(Patient p) {
         if (p == null) {
@@ -179,4 +224,3 @@ public class PatientQueue {
 
 }
 
-    

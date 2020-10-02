@@ -6,8 +6,12 @@ public class Clinic {
     private int seenByDoctor = 0;
     private int sentToER = 0;
     private int walkedOut = 0;
+    private int time_in = 0;
 
     public Clinic(int cap, int er_threshold) {
+        er_threshold = er_threshold;
+        capacity = cap;
+        pq = new NewPatientQueue(cap);
 	//TO BE COMPLETED
     }
 
@@ -31,16 +35,36 @@ public class Clinic {
      *of the max patient
      */
     public String process(String name, int urgency) {
+        Patient newpatient = new Patient(name, urgency, processed++); //new patient with time_in, also iterates time_in
+
+        if (urgency > er_threshold()) {
+            sendToER(newpatient);
+            return null;
+        }
+        if (pq.insert(newpatient) != -1) {
+            return newpatient.name();
+        } else {
+            if (newpatient.compareTo(pq.getMax()) > 1) {
+                sendToER(newpatient);
+                return null;
+            } else {
+                sendToER(pq.delMax());
+                pq.insert(newpatient);
+                return pq.getMax().name();
+            }
+        }
 	//TO BE COMPLETED
-	    processed++;
-	    return null;
     }
 
     /*a doctor is available--send the patient with
      *highest urgency to be seen; return the name
      *of the Patient or null if the queue is empty*/
     public String seeNext() {
-        return null;
+        if (pq.isEmpty()) {
+            return null;
+        }
+        seeDoctor(pq.getMax());
+        return pq.delMax().name();
 	//TO BE COMPLETED
     }
 
@@ -51,6 +75,12 @@ public class Clinic {
      *return true if the Patient is removed from the queue
      *and false otherwise*/
     public boolean handle_emergency(String name, int urgency) {
+        if (urgency > er_threshold()) {
+            sendToER(pq.remove(name));
+            return true;
+        }
+        pq.update(name, urgency);
+
         return false;
 	//TO BE COMPLETED
     }
@@ -58,6 +88,7 @@ public class Clinic {
     /*Patient decides to walk out
      *remove them from the queue*/
     public void walk_out(String name) {
+        pq.remove(name);
 	//TO BE COMPLETED
 	    walkedOut++;
 	    return;
